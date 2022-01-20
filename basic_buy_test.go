@@ -68,7 +68,7 @@ func Test2BuysSameDay(t *testing.T) {
 	lots := processTransactions(transactionString, "fifo")
 
 	if len(lots) != 1 {
-		t.Errorf("got %q, wanted %q", len(lots), 2)
+		t.Errorf("got %q, wanted %q", len(lots), 1)
 	}
 
 	if lots[0].avgCost != 200 {
