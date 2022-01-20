@@ -9,6 +9,13 @@ Build Instructions
 
 Run Instructions 
 ===========================================================
-1) Run program: >./tax-lots {TransactionString} {AccountingMethod}
+1) Navigate to Project Directory
+   - Example: > cd ~/git/tax-lots
+2) Run program: >./tax-lots {TransactionString} {AccountingMethod}
    Example: ./tax-lots 2021-01-01,buy,10000.00,1.00000000\n2021-01-02,sell,20000.00,0.50000000 fifo
-2) Accounting Methods Supported: FIFO, HIFO
+3) Accounting Methods Supported: FIFO, HIFO
+
+Test Instructions
+1) Navigate to Project Directory
+   - Example: > cd ~/git/tax-lots
+2) Run Command >go test 
