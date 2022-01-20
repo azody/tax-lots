@@ -25,8 +25,13 @@ type Lot struct {
 }
 
 func main() {
-	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-01-02,sell,20000.00,0.50000000"
-	accountingMethod := "fifo"
+
+	// go build tax-lots.go
+	// ./tax-lots 2021-01-01,buy,10000.00,1.00000000\n2021-01-02,sell,20000.00,0.50000000 fifo
+
+	transactionString := os.Args[1]
+	accountingMethod := os.Args[2]
+
 	lots := processTransactions(transactionString, accountingMethod)
 
 	for _, element := range lots {
@@ -113,7 +118,7 @@ func processTransactions(transactionString string, accountingMethod string) []Lo
 func parseTransactions(transactionString string) []Transaction {
 
 	transactions := []Transaction{}
-	transactionStrings := strings.Split(transactionString, "\n")
+	transactionStrings := strings.Split(transactionString, "\\n")
 
 	// Formatting and Validation for Transactions
 	for _, element := range transactionStrings {

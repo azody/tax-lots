@@ -10,7 +10,7 @@ import (
  */
 func Test2BuysFIFO(t *testing.T) {
 
-	transactionString := "2021-01-01,buy,100.00,2.0\n2021-01-02,buy,200.00,0.5"
+	transactionString := "2021-01-01,buy,100.00,2.0\\n2021-01-02,buy,200.00,0.5"
 	lots := processTransactions(transactionString, "fifo")
 
 	if len(lots) != 2 {
@@ -36,7 +36,7 @@ func Test2BuysFIFO(t *testing.T) {
 
 func Test2BuysHIFO(t *testing.T) {
 
-	transactionString := "2021-01-01,buy,100.00,2.0\n2021-01-02,buy,200.00,0.5"
+	transactionString := "2021-01-01,buy,100.00,2.0\\n2021-01-02,buy,200.00,0.5"
 	lots := processTransactions(transactionString, "fifo")
 
 	if len(lots) != 2 {
@@ -64,7 +64,7 @@ func Test2BuysHIFO(t *testing.T) {
 * Test Lot Accumulation on same day Buy
  */
 func Test2BuysSameDay(t *testing.T) {
-	transactionString := "2021-01-01,buy,100.00,2.0\n2021-01-01,buy,400.00,1.0"
+	transactionString := "2021-01-01,buy,100.00,2.0\\n2021-01-01,buy,400.00,1.0"
 	lots := processTransactions(transactionString, "fifo")
 
 	if len(lots) != 1 {

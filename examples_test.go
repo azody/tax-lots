@@ -7,7 +7,7 @@ import (
 )
 
 func TestExample1(t *testing.T) {
-	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-02-01,sell,20000.00,0.50000000"
+	transactionString := "2021-01-01,buy,10000.00,1.00000000\\n2021-02-01,sell,20000.00,0.50000000"
 	lots := processTransactions(transactionString, "fifo")
 
 	t1, _ := time.Parse("2006-01-02", "2021-01-01")
@@ -35,7 +35,7 @@ func TestExample1(t *testing.T) {
 }
 
 func TestExample2(t *testing.T) {
-	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-01-02,buy,20000.00,1.00000000\n2021-02-01,sell,20000.00,1.50000000"
+	transactionString := "2021-01-01,buy,10000.00,1.00000000\\n2021-01-02,buy,20000.00,1.00000000\\n2021-02-01,sell,20000.00,1.50000000"
 	lots := processTransactions(transactionString, "fifo")
 
 	t1, _ := time.Parse("2006-01-02", "2021-01-02")
@@ -62,7 +62,7 @@ func TestExample2(t *testing.T) {
 }
 
 func TestExample3(t *testing.T) {
-	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-01-02,buy,20000.00,1.00000000\n2021-02-01,sell,20000.00,1.50000000"
+	transactionString := "2021-01-01,buy,10000.00,1.00000000\\n2021-01-02,buy,20000.00,1.00000000\\n2021-02-01,sell,20000.00,1.50000000"
 	lots := processTransactions(transactionString, "hifo")
 
 	t1, _ := time.Parse("2006-01-02", "2021-01-01")
