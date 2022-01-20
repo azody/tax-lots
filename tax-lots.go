@@ -25,9 +25,13 @@ type Lot struct {
 }
 
 func main() {
-	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-02-01,sell,20000.00,0.50000000"
+	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-01-02,sell,20000.00,0.50000000"
 	accountingMethod := "fifo"
-	processTransactions(transactionString, accountingMethod)
+	lots := processTransactions(transactionString, accountingMethod)
+
+	for _, element := range lots {
+		fmt.Printf("%v, %v, %v, %v", element.id, element.tradeDate.Format("2006-01-02"), fmt.Sprintf("%.2f", element.avgCost), fmt.Sprintf("%.8f", element.quantity))
+	}
 	os.Exit(0)
 }
 
@@ -48,8 +52,6 @@ func processTransactions(transactionString string, accountingMethod string) []Lo
 	sort.Slice(transactions, func(i, j int) bool {
 		return transactions[i].tradeDate.Before(transactions[j].tradeDate)
 	})
-
-	fmt.Printf("%+v", transactions)
 
 	/**
 	* Process Lots
@@ -104,10 +106,6 @@ func processTransactions(transactionString string, accountingMethod string) []Lo
 			// Don't need to resort on sell as only change would be potential removal of final element
 		}
 
-	}
-	fmt.Printf("\n----------------------------------------------------------\n")
-	for _, element := range lots {
-		fmt.Printf("%+v \n", element)
 	}
 	return lots
 }
