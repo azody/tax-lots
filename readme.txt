@@ -16,6 +16,7 @@ Run Instructions
 3) Accounting Methods Supported: FIFO, HIFO
 
 Test Instructions
+===========================================================
 1) Navigate to Project Directory
    - Example: > cd ~/git/tax-lots
 2) Run Command >go test 
