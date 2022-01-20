@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -27,6 +28,7 @@ func main() {
 	transactionString := "2021-01-01,buy,10000.00,1.00000000\n2021-02-01,sell,20000.00,0.50000000"
 	accountingMethod := "fifo"
 	processTransactions(transactionString, accountingMethod)
+	os.Exit(0)
 }
 
 func processTransactions(transactionString string, accountingMethod string) []Lot {
@@ -84,9 +86,13 @@ func processTransactions(transactionString string, accountingMethod string) []Lo
 					}
 				}
 			}
-			sortLots(lots, accountingMethod) // Sort lots to keep the next depleted lot in last index
+			sortLots(lots, accountingMethod) // Sort lots to keep the next to be depleted lot in last index
 		} else {
 			for element.quantity > 0 {
+				if len(lots) == 0 {
+					fmt.Println("Oversold Condition, Sell Occured with Quantity Greater than Amount Held")
+					os.Exit(1)
+				}
 				remainder, updatedLot := updateLot(lots[len(lots)-1], element)
 				if remainder > 0 {
 					lots = lots[:len(lots)-1] // Remove depleted lots
@@ -121,30 +127,37 @@ func parseTransactions(transactionString string) []Transaction {
 		t, err := time.Parse("2006-01-02", currentStringArray[0])
 
 		if err != nil {
-			panic(err)
+			fmt.Println("Invalid Date Given " + currentStringArray[0])
+			os.Exit(1)
 		}
 
 		// Validate Trade Action
 		if currentStringArray[1] != "buy" && currentStringArray[1] != "sell" {
 			fmt.Println("Transaction Type {} not supported", currentStringArray[1])
+			os.Exit(1)
 		}
 
 		// Validate Price
 		p, err := strconv.ParseFloat(currentStringArray[2], 64)
 		if err != nil {
-			fmt.Println(err) // Handle as desired
+			fmt.Println("Invalid Price Given: " + currentStringArray[2])
+			os.Exit(1)
 		}
+
 		if p < 0 {
-			fmt.Println("Negative Price Inserted")
+			fmt.Println("Negative Price Given for a Transaction: " + currentStringArray[2])
+			os.Exit(1)
 		}
 
 		// Validate Quantity
 		q, err := strconv.ParseFloat(currentStringArray[3], 64)
 		if err != nil {
-			fmt.Println(err) // Handle as desired
+			fmt.Println("Invalid Quantity Given: " + currentStringArray[3])
+			os.Exit(1)
 		}
 		if q < 0 {
-			fmt.Println("Negative Quantity Inserted")
+			fmt.Println("Negative Quantity Given for a Transaction: " + currentStringArray[3])
+			os.Exit(1)
 		}
 
 		transactions = append(transactions,
